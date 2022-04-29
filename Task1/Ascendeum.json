@@ -1,0 +1,265 @@
+{
+    "contact_address": "Ascendeum Co, 29 Tantum Ct. Bordentown, NJ, 08505",
+    "contact_email": "signal@ascendeum.com",
+    "version": 1.0,
+    "identifiers": [
+        {
+            "name": "DUNS",
+            "value": "037104334"
+        }
+    ],
+    "sellers": [
+        {
+            "domain": "tracker.gg",
+            "is_passthrough": "0",
+            "name": "Tracker Network LLC",
+            "seller_id": "asc90108",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "abbreviations.com",
+            "is_passthrough": "0",
+            "name": "Stands4 LTD",
+            "seller_id": "asc90540",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "gamepress.gg",
+            "is_passthrough": "0",
+            "name": "Gamepress LLC",
+            "seller_id": "asc90693",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "bolde.com",
+            "is_passthrough": "0",
+            "name": "The Bolde Inc.",
+            "seller_id": "asc91053",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "greetingsisland.com",
+            "is_passthrough": "0",
+            "name": "Clear Coast LTD",
+            "seller_id": "asc91260",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "arkansasonline.com",
+            "is_passthrough": "0",
+            "name": "Wehco Media Inc.",
+            "seller_id": "asc91728",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "koreaboo.com",
+            "is_passthrough": "0",
+            "name": "Shekar, Inc.",
+            "seller_id": "asc91989",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "elephantjournal.com",
+            "is_passthrough": "0",
+            "name": "Waylon H. Lewis Enterprises, LLC",
+            "seller_id": "asc94320",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "rollcall.com",
+            "is_passthrough": "0",
+            "name": "CQ Roll Call",
+            "seller_id": "asc94725",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "temptalia.com",
+            "is_passthrough": "0",
+            "name": "Temptalia LLC",
+            "seller_id": "asc95148",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "kueez.com",
+            "is_passthrough": "0",
+            "name": "Kueez Entertainment Ltd",
+            "seller_id": "asc96525",
+            "seller_type": "BOTH"
+        },
+        {
+            "domain": "thelayoff.com",
+            "is_passthrough": "0",
+            "name": "Forum LLC",
+            "seller_id": "asc97020",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "tnmarketing.com",
+            "is_passthrough": "0",
+            "name": "TN Marketing LLC",
+            "seller_id": "asc97533",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "thesource.com",
+            "is_passthrough": "0",
+            "name": "Source Digital, INC.",
+            "seller_id": "asc98064",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "quizony.com",
+            "is_passthrough": "0",
+            "name": "Quizony SP",
+            "seller_id": "asc99180",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "the18.com",
+            "is_passthrough": "0",
+            "name": "The 18, LLC",
+            "seller_id": "asc99765",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "lake-link.com",
+            "is_passthrough": "0",
+            "name": "Lake-Link Inc.",
+            "seller_id": "asc100368",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "scoresinlive.com",
+            "is_passthrough": "0",
+            "name": "Scores In Live",
+            "seller_id": "asc102285",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "enthuseddigital.com",
+            "is_passthrough": "0",
+            "name": "Enthused Digital, LLC",
+            "seller_id": "asc103653",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "younghollywood.com",
+            "is_passthrough": "0",
+            "name": "Young Hollywood LLC",
+            "seller_id": "asc104364",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "mamasuncut.com",
+            "is_passthrough": "0",
+            "name": "Mamas Uncut LLC",
+            "seller_id": "asc105093",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "svtperformance.com",
+            "is_passthrough": "0",
+            "name": "SVT Performance LLC",
+            "seller_id": "asc108189",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "dailydot.com",
+            "is_passthrough": "0",
+            "name": "The Daily Dot, LLC",
+            "seller_id": "asc109008",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "exceljet.net",
+            "is_passthrough": "0",
+            "name": "Kazan Inc, DBA Exceljet",
+            "seller_id": "asc109845",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "buddymeter.com",
+            "is_passthrough": "0",
+            "name": "Qzingo",
+            "seller_id": "asc112464",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "versus.com",
+            "is_passthrough": "0",
+            "name": "Urge IO GmbH",
+            "seller_id": "asc113373",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "rankchart.org",
+            "is_passthrough": "0",
+            "name": "Media Partners Ltd",
+            "seller_id": "asc115245",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "soaphub.com",
+            "is_passthrough": "0",
+            "name": "Lola Digital Media LLC",
+            "seller_id": "asc119205",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "letsrun.com",
+            "is_passthrough": "0",
+            "name": "Lets Run",
+            "seller_id": "asc121293",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "dailyherald.com",
+            "is_passthrough": "0",
+            "name": "Daily Herald",
+            "seller_id": "asc125685",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "thegradcafe.com",
+            "is_passthrough": "0",
+            "name": "Route 413 Capital LLC",
+            "seller_id": "asc130365",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "studytonight.com",
+            "is_passthrough": "0",
+            "name": "StudyTonight Technologies Private Limited",
+            "seller_id": "asc132813",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "gate2home.com",
+            "is_passthrough": "0",
+            "name": "Ilan Bar Magen 061220380",
+            "seller_id": "asc134064",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "medstudentsonline.com.au",
+            "is_passthrough": "0",
+            "name": "Med Students Online",
+            "seller_id": "asc137925",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "freeconvert.com",
+            "is_passthrough": "0",
+            "name": "TransMedia Inc.",
+            "seller_id": "asc140589",
+            "seller_type": "PUBLISHER"
+        },
+        {
+            "domain": "broncosportforum.com",
+            "is_passthrough": "0",
+            "name": "OBV2 LLC",
+            "seller_id": "asc143436",
+            "seller_type": "PUBLISHER"
+        }
+    ]
+}
