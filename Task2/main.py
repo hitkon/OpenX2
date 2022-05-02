@@ -3,6 +3,7 @@ import os
 import argparse
 import pandas as pd
 import functools
+import datetime
 
 def CreateParser():
     parser = argparse.ArgumentParser()
@@ -68,20 +69,23 @@ def date_parser(date_list, date):
         candidates[0] = candidates[0] + " 00:00:00"
         candidates[1] = candidates[1] + " 23:59:59"
 
-    #print(candidates[0])
     date_list.append([candidates[0], candidates[1]])
 
 
+# Comfortable adding interval
 def add_date_to_list(date_list, interval, index):
     date_list.append([interval[0], 0, index])
     date_list.append([interval[1], 1, index])
 
+
+# Find all free intervals instead of busy intervals
 def calendar_parser(date_list, date_lines, index, date_now):
     busy_intervals = []
     for date in date_lines:
         date_parser(busy_intervals, date)
 
-    busy_intervals.sort()
+    busy_intervals.sort()  # Unnecessary if intervals in calendars are ordered
+
     prev = date_now
     for interval in busy_intervals:
         if interval[1] > prev:
@@ -92,18 +96,8 @@ def calendar_parser(date_list, date_lines, index, date_now):
     add_date_to_list(date_list, [prev, "3000-01-01 00:00:00"], index)
 
 
-def date_compare(a, b):
-    if a[0] < b[0]:
-        return -1
-    elif a[0] > b[0]:
-        return 1
-    else:
-        if a[1] > b[1]:
-            return -1
-        elif a[1] < b[1]:
-            return 1
-        else:
-            return 0
+def get_now_date_and_time_to_str():
+    return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
 
 if __name__ == '__main__':
@@ -116,8 +110,11 @@ if __name__ == '__main__':
 
     calendars_list = os.listdir(calendars)
 
+
+
     date_list = []
     date_now = "2022-07-01 09:00:00"
+    date_now = get_now_date_and_time_to_str()
 
     for i in range(len(calendars_list)):
         with open(calendars + "/" + calendars_list[i], 'r') as file:
