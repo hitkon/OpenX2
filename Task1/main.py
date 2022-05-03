@@ -1,196 +1,134 @@
+""" Task 1 description
+The program has two arguments --max-depth(default = 2) and --tree-path if tree of relation already exists.
+And you want only to show te tree of relations.
+Algorythm consists of two functions build_tree() and show_tree().
+The first one build a tree of domain relations of set depth starting from domain openx.com, and then tree will be represented by
+the second one.
+"""
+
 import os.path
+import sys
+import contextlib
 import json
 import requests
 import treelib
-import threading
+import argparse
 
-# queueLock = threading.Lock()
-# dictLock = threading.Lock()
-# FILELock = threading.Lock()
-# thread_activity = threading.Lock()
-#
-# thread_activity_count = [0]
-#
-# exitFlag = 0
-#
-# class myThread(threading.Thread):
-#     def __init__(self, id, name, queue, used_dict, FILE, thread_activity_count):
-#         threading.Thread.__init__(self)
-#         self.id = id
-#         self.name = name
-#         self.queue = queue
-#         self.used_dict = used_dict
-#         self.FILE = FILE
-#         self.thread_activity_count = thread_activity_count
-#
-#     def run(self):
-#         while not exitFlag:
-#
-#             while True:
-#                 queueLock.acquire()
-#                 size = len(self.queue)
-#                 if size == 0:
-#                     queueLock.release()
-#                     break
-#                 self.thread_activity_count[0] += 1
-#                 print(self.name)
-#                 cur_node = self.queue.pop(0)
-#                 queueLock.release()
-#
-#                 try:
-#                     with open("json/" + cur_node + ".json", "r") as read_file:
-#                         data = json.load(read_file)
-#                     sellers = data['sellers']
-#                     for seller in sellers:
-#                         domain = seller['domain']
-#                         if domain[0:4] == 'www.':
-#                             domain = domain[4:]
-#                         if domain[0:8] == 'https://':
-#                             domain = domain[12:-1]
-#
-#                         dictLock.acquire()
-#                         domain_used_dict = self.used_dict.get(domain)
-#                         dictLock.release()
-#                         if domain_used_dict is not None:
-#                             continue
-#
-#                         FILELock.acquire()
-#                         self.FILE.write(domain + " " + cur_node + "\n")
-#                         self.FILE.flush()
-#                         FILELock.release()
-#                         if seller['seller_type'] != 'PUBLISHER':
-#                             data2 = 'Not Publisher'
-#                             try:
-#                                 r = requests.get('https://' + domain + '/sellers.json')
-#                                 if r.status_code == 200:
-#                                     if not os.path.exists("json/"+domain + ".json"):
-#                                         BUFFILE = open("json/"+domain + ".json", "w")
-#                                         BUFFILE.write(json.dumps(r.json()))
-#                                         BUFFILE.close()
-#                                     #queueLock.acquire()
-#                                     self.queue.append(domain)
-#                                     #queueLock.release()
-#                                     print(domain)
-#                             except Exception as ex:
-#                                 print(ex)
-#                             #dictLock.acquire()
-#                             self.used_dict[domain] = data2
-#                             #dictLock.release()
-#                         else:
-#                             #dictLock.acquire()
-#                             self.used_dict[domain] = 'Publisher'
-#                             #dictLock.release()
-#
-#                 except Exception as ex:
-#                     if dictLock.locked():
-#                         dictLock.release()
-#                     if FILELock.locked():
-#                         FILELock.release()
-#                     print(ex)
-#                 self. thread_activity_count[0] -= 1
-#
-#
-# def build_tree(num_thread = 3):
-#     with open("input.json", "r") as read_file:
-#         data = json.load(read_file)
-#     threadList = []
-#     for i in range(num_thread):
-#         threadList.append("Thread-" + str(i))
-#     threadId = 1
-#     threads = []
-#
-#     used_dict = {"openx.com": data['sellers']}
-#     queue = ["openx.com"]
-#     FILE = open("tree.txt", "w")
-#     for name in threadList:
-#         thread = myThread(threadId, name, queue, used_dict, FILE, thread_activity_count)
-#         thread.start()
-#         threads.append(thread)
-#         threadId += 1
-#
-#     while True:
-#         thread_activity.acquire()
-#         count = thread_activity_count[0]
-#         thread_activity.release()
-#         if count == 0:
-#             break
-#     exitFlag = 1
-#     print(exitFlag)
-#
-#     for t in threads:
-#         t.join()
-#     FILE.close()
+def CreateParser():
+    """The function creates parser for input arguments"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--max-depth', default="2")
+    parser.add_argument('--tree-path', default="NoFile")
+    return parser
 
+def build_tree(max_depth = 2, first_request = 'openx.com'):
+    """ This function creates file tree.txt, which contains all dependencies between domains.
+    Make it by recursion requests to domains sellers files, which seller_type is INTERMEDIARY or BOTH until depth less
+    than defined max.
+    """
+    if not os.path.exists("json"):  # Create directory json for downloaded json files
+        os.mkdir("json")
 
-def build_tree():
-    with open("input.json", "r") as read_file:
-        data = json.load(read_file)
-    used_dict = {"openx.com": data['sellers']}
-    queue = ["openx.com"]
+    if not os.path.exists("json/" + first_request + ".json"):   # Download and save the first sellers file.
+        try:
+            r = requests.get('https://' + first_request + '/sellers.json')
+            if r.status_code == 200:
+                BUFFILE = open("json/" + first_request + ".json", "w")
+                BUFFILE.write(json.dumps(r.json()))
+                BUFFILE.close()
+        except:
+            print("Can't upload the first file")
+            return
+    used_dict = {first_request: 1}  # Dictionary of used domains, consist of pairs of domain and its depth
+    queue = [first_request]         # Queue of not PUBLISHER domains
     FILE = open("tree.txt", "w")
     while len(queue) != 0:
-        cur_node = queue.pop(0)
-        try:
-            with open("json/" + cur_node + ".json", "r") as read_file:
-                data = json.load(read_file)
-            sellers = data['sellers']
-            for seller in sellers:
-                domain = seller['domain']
-                if domain[0:4] == 'www.':
-                    domain = domain[4:]
-                if domain[0:8] == 'https://':
-                    domain = domain[12:-1]
 
-                if used_dict.get(domain) is not None:
+        cur_domain = queue.pop(0)           # Take the first domain in queue
+        cur_depth = used_dict[cur_domain]
+
+        if cur_depth == -1:    # Depth is -1 if domain was not response
+            continue
+
+        try:  # Try to open json file of current domain
+            if used_dict.get(cur_domain) == -1:    # Do not take domains without appropriate file of sellers
+                continue
+
+            with open("json/" + cur_domain + ".json", "r") as read_file:
+                data = json.load(read_file)     # Read appropriate downloaded json file for current domain
+            sellers = data['sellers']
+
+            for seller in sellers:
+                lower_domain = seller['domain']
+
+                if lower_domain[0:4] == 'www.':
+                    lower_domain = lower_domain[4:]     # Standardizing domains which start from www.
+                if lower_domain[0:8] == 'https://':
+                    lower_domain = lower_domain[12:-1]   # Standardizing domains which start from https//www.
+
+                if used_dict.get(lower_domain) is not None:  # Process only not used domains
+                    continue
+
+                FILE.write(lower_domain + " " + cur_domain + "\n")  # Add to tree relation
+                FILE.flush()
+
+                lower_level = cur_depth + 1
+                if lower_level >= max_depth:    # If depth more than maks or equal, not process the domain
                     continue
 
 
-                FILE.write(domain + " " + cur_node + "\n")
-                FILE.flush()
+
 
                 if seller['seller_type'] != 'PUBLISHER':
-                    data2 = 'Not Publisher'
-                    if not os.path.exists("json/" + domain + ".json"):
-                        try:
-                            r = requests.get('https://' + domain + '/sellers.json')
+                    if not os.path.exists("json/" + lower_domain + ".json"):
+                        try:  # Trying to download and write sellers file of domain
+                            r = requests.get('https://' + lower_domain + '/sellers.json')
                             if r.status_code == 200:
-
-                                BUFFILE = open("json/" + domain + ".json", "w")
+                                BUFFILE = open("json/" + lower_domain + ".json", "w")
                                 BUFFILE.write(json.dumps(r.json()))
                                 BUFFILE.close()
-
-
-                                print(domain)
                         except Exception as ex:
-                            print(ex)
-                    queue.append(domain)
-                    used_dict[domain] = data2
-                else:
-                    used_dict[domain] = 'Publisher'
+                            lower_level = -1  # Mark if domain is unresponsive
+                            pass
+                    queue.append(lower_domain)  # If domain is not PUBLISHER, add domain to recursion queue.
+                used_dict[lower_domain] = lower_level   # Then mark the domain as used and add depth of the domain.
         except Exception as ex:
-            print(ex)
+            pass
 
     FILE.close()
 
-def show_tree(nodes = 1000):
-    tree = treelib.Tree()
+
+def show_tree(path = ""):
+    """The function creates tree of domains by using file tree.txt and library treelib
+        Result saves in file answer.txt"""
+
+    tree = treelib.Tree()   # Using the treelib library make a tree that represent relations of domains
     tree.create_node('openx.com', 'openx.com')
-    with open('tree.txt', 'r') as tree_file:
-        i = 0
+    with open(path + "tree.txt", 'r') as tree_file:  # Open the file with a tree
         for line in tree_file:
-            if i == nodes:
-                break
             try:
                 edge = line.strip().split(" ")
-                if len(edge) > 1:
+                if len(edge) > 1:   # There are maybe some broken empty relations if one of sellers files was incorrect
                     tree.create_node(edge[0], edge[0], parent=edge[-1])
-                    i+=1
-            except:
+            except Exception as ex:
                 pass
-    print("Max depth: " + str(tree.depth()))
-    tree.show()
+
+    with open("answer.txt", "w", encoding='utf-8') as f:  # Write the answer tree to the file "answer.txt"
+        with contextlib.redirect_stdout(f):
+            print("Max depth: " + str(tree.depth()))
+            tree.show()
 
 
 if __name__ == '__main__':
-    build_tree()
-    #show_tree(nodes=10000)
+    parser = CreateParser()
+    namespace = parser.parse_args(sys.argv[1:])  # Parse the arguments
+
+    # Decide if program needs to make tree.
+    if namespace.tree_path == "NoFile" or not os.path.exists(namespace.tree_path):
+        build_tree(max_depth=int(namespace.max_depth) + 1)
+        show_tree()
+    else:
+        show_tree(namespace.tree_path)
+
+
+
