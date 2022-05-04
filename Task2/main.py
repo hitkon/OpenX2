@@ -37,7 +37,7 @@ def prev_date(date, minutes = 0, seconds = 0):
 
 def is_interval_fit(a, b, duration_in_minutes):
     """The function returns is b - a > given minutes"""
-    if next_date(a[0], minutes=duration_in_minutes) <= b[0]:
+    if next_date(a[0], minutes=duration_in_minutes, seconds=-1) <= b[0]:
         return True
     return False
 

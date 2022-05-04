@@ -25,7 +25,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_find_time_in_table_5(self):
         date_list = [['2022-07-01 09:00:00', 0, 0], ['2022-07-02 13:00:00', 0, 1], ['2022-07-02 13:14:59', 1, 0], ['2022-07-02 14:00:00', 0, 0],['3000-01-01 00:00:00', 1, 0], ['3000-01-01 00:00:00', 1, 1]]
-        self.assertEqual(find_time_in_table(date_list, duration_in_minutes=14, min_people=2), "2022-07-02 13:00:00",
+        self.assertEqual(find_time_in_table(date_list, duration_in_minutes=15, min_people=2), "2022-07-02 13:00:00",
                          "Should be 2022-07-02 13:00:00")
 
     def test_calendar_parser_1(self):
